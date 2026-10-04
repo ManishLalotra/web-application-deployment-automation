@@ -1,0 +1,19 @@
+name: Deployment Automation CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax check deployment scripts
+        run: |
+          for s in scripts/*.sh; do
+            bash -n "$s"
+            echo "Valid syntax: $s"
+          done
